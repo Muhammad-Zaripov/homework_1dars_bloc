@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../bloc/product_bloc.dart';
+import '../bloc/product_event.dart';
 import '../widgets/carousel_slider_widget.dart';
 import '../widgets/category_widget.dart';
 import '../widgets/products_widget.dart';
@@ -12,8 +15,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
-        forceMaterialTransparency: true,
+        // forceMaterialTransparency: true,
         centerTitle: false,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,21 +43,32 @@ class HomeScreen extends StatelessWidget {
           ),
           IconButton(onPressed: () {}, icon: Icon(Icons.notifications_none)),
         ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: TextField(
+              onChanged: (value) {
+                context.read<ProductBloc>().add(
+                  SearchProductEvent(query: value),
+                );
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Search here...',
+              ),
+            ),
+          ),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.only(left: 20, right: 20, top: 20),
         child: SingleChildScrollView(
+          clipBehavior: Clip.none,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Search here...',
-                ),
-              ),
-              SizedBox(height: 18),
               CarouselSliderWidget(),
               SizedBox(height: 6),
               Text(

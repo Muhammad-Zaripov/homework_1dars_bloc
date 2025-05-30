@@ -15,5 +15,21 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         emit(ProductError(e.toString()));
       }
     });
+    on<SearchProductEvent>((event, emit) async {
+      emit(ProductLoading());
+      try {
+        final allProducts = await repository.fetchProducts();
+        final filtered =
+            allProducts
+                .where(
+                  (p) =>
+                      p.title.toLowerCase().contains(event.query.toLowerCase()),
+                )
+                .toList();
+        emit(ProductLoaded(filtered));
+      } catch (e) {
+        emit(ProductError(e.toString()));
+      }
+    });
   }
 }
