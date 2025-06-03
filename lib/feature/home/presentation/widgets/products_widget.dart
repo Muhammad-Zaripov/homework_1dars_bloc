@@ -38,11 +38,11 @@ class ProductsWidget extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  height: 300,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.only(
@@ -52,15 +52,13 @@ class ProductsWidget extends StatelessWidget {
                         child: Image.network(
                           product.image,
                           width: double.infinity,
-                          height: 112,
-                          // fit: BoxFit.cover,
+                          height: 90,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(5),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-
                           children: [
                             Text(
                               product.title,
@@ -72,6 +70,7 @@ class ProductsWidget extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
+                            SizedBox(height: 5),
                             Container(
                               decoration: BoxDecoration(
                                 color: Color(0xff67C4A7),
